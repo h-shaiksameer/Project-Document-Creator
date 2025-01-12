@@ -213,6 +213,7 @@ def create_project_document(project_description):
     generate_section_content("Conclusion / Bibliography", f"Summarize the key findings, achievements, and limitations of the project titled '{project_description}'. Include recommendations for future work, followed by a bibliography listing relevant references.")
     
     generate_section_content("References", f"Generate a list of references related to the project titled '{project_description}'. Provide references to relevant books, articles, research papers, websites, and tools used.")
+    time.sleep(10)
     
     generate_section_content("Appendices", f"Create appendices for the project titled '{project_description}', including technical specifications, detailed data, and additional resources that support the project.")
 

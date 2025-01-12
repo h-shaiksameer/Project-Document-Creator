@@ -3,3 +3,5 @@ venv
 12.docx
 __pycache__
 document
+generated_docs/*
+monitor_folder.py
