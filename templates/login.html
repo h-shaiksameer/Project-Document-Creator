@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="static/images/document.png" type="image/png">
     <link rel="icon" href="{{ url_for('static', filename='images/document.png') }}" type="image/png">
     <title>Login</title>
 </head>
 <body>
     <h1>Login</h1>
+    
+    {% if message %}
+        <p style="color: green; font-weight: bold;">{{ message }}</p>
+    {% endif %}
+    {% if error %}
+        <p style="color: red; font-weight: bold;">{{ error }}</p>
+    {% endif %}
+
     <form method="POST" action="/login">
         <input type="email" id="email" name="email" placeholder="Email" required>
         <input type="password" id="password" name="password" placeholder="Password" required>
         <button type="submit">Login</button>
     </form>
+
     <p>Don't have an account? <a href="/register_page">Register here</a></p>
 </body>
 </html>
