@@ -1,6 +1,5 @@
 venv
 .env
 12.docx
-firebase_admin_key.json
 __pycache__
 document
