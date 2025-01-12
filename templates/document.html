@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Project Documentation</title>
+</head>
+<body>
+    <h1>Generate Project Documentation</h1>
+    
+    <form method="POST" action="/generate_document">
+        <label for="project_description">Enter Project Description:</label><br>
+        <textarea id="project_description" name="project_description" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Generate Document</button>
+    </form>
+    
+    {% if message %}
+        <p>{{ message }}</p> <!-- Display any feedback message -->
+    {% endif %}
+
+    {% if download_url %}
+        <!-- Provide a download link to the generated document -->
+        <p> You can download it from the link below:</p>
+        <a href="{{ download_url }}" download>Download Project Documentation</a>
+    {% endif %}
+
+</body>
+</html>

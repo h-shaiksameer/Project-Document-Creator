@@ -42,6 +42,7 @@ def get_gemini_response(model, message):
 
 # Preprocess the content
 def preprocess_content(content):
+    # Remove lines with only special characters or introductory/closing statements
     content = re.sub(r'^[#*].*', '', content)  # Remove lines that start with '#' or '*'
     content = re.sub(r'^\s*(This (is|was).*)|(\(.*\))|(\*|#).*$', '', content)  # Remove unwanted lines
     content = re.sub(r'\*\*', '', content)  # Remove bold markdown (**)
@@ -85,10 +86,45 @@ def add_code_block(doc, code):
 
 # Generate a sanitized filename from the project description
 def generate_filename(project_description):
+    # Extract the first 3-4 words from the description
     words = project_description.split()[:4]
     base_name = "_".join(words)
+    # Remove invalid characters for filenames
     sanitized_name = re.sub(r'[\\/*?:"<>|]', '', base_name)
     return f"{sanitized_name}_documentation.docx"
+
+def create_table_of_contents(doc):
+    # Add a heading for the table of contents
+    toc_heading = doc.add_heading(level=0)  # Use level 0 for the main heading
+    run = toc_heading.add_run("Table of Contents")
+    run.bold = True
+    run.font.size = Pt(26)  # Set font size for the TOC heading
+    
+    # Add a table with bold borders for the TOC entries
+    table = doc.add_table(rows=0, cols=2)  # Create a table with two columns (Section Name and Page Number)
+    table.style = 'Table Grid'  # Bold borders for the table
+    
+    sections = [
+        "Abstract",
+        "Table of Contents",
+        "Introduction",
+        "Literature Survey",
+        "Analysis and Design",
+        "Experimental Investigations",
+        "Implementation",
+        "Testing and Debugging/Results",
+        "Conclusion / Bibliography",
+        "References",
+        "Appendices"
+    ]
+    
+    for section in sections:
+        row = table.add_row()
+        row.cells[0].text = section
+        row.cells[0].paragraphs[0].runs[0].font.size = Pt(22)  # Set font size for section names
+        row.cells[1].text = "..."  # Placeholder for page numbers; could be updated dynamically later
+        row.cells[1].paragraphs[0].runs[0].font.size = Pt(22)
+
 
 # Function to create the project document
 def create_project_document(project_description):
@@ -119,9 +155,7 @@ def create_project_document(project_description):
     doc.add_paragraph(project_description)
 
     doc.add_page_break()
-    doc.add_heading('Table of Contents', level=1)
-    for section in table_of_contents:
-        doc.add_paragraph(section)
+    create_table_of_contents(doc)
 
     def generate_section_content(section_title, prompt):
         doc.add_page_break()  # Start each section on a new page
@@ -136,20 +170,23 @@ def create_project_document(project_description):
         
         # Process references or appendices differently if needed
         if section_title == "References":
-            for reference in content.split("\n"):
-                if reference.strip():
-                    doc.add_paragraph(reference.strip(), style="List Bullet")
+            doc.add_paragraph(content)
+            # for reference in content.split("\n"):
+            #     if reference.strip():
+            #         doc.add_paragraph(reference.strip(), style="List Bullet")
         elif section_title == "Appendices":
+            doc.add_paragraph(content)
             # Treat appendices as subsections
-            for appendix in content.split("\n\n"):  # Assuming sections are separated by double newlines
-                if appendix.strip():
-                    doc.add_heading(appendix.split(":")[0], level=2)  # Subsection title
-                    doc.add_paragraph(":".join(appendix.split(":")[1:]).strip())
+            # for appendix in content.split("\n\n"):  # Assuming sections are separated by double newlines
+            #     if appendix.strip():
+            #         doc.add_heading(appendix.split(":")[0], level=2)  # Subsection title
+            #         doc.add_paragraph(":".join(appendix.split(":")[1:]).strip())
         else:
             # Add content for other sections
             doc.add_paragraph(content)
 
-    # General prompts for any project
+
+    # Generate content for each section
     generate_section_content("Abstract", f"Generate an abstract for the project based on this description: {project_description}")
     generate_section_content(
         "Introduction",
@@ -181,14 +218,25 @@ def create_project_document(project_description):
 
     # Generate filename and save the document
     filename = generate_filename(project_description)
-    doc.save(filename)
-    print(f"Document saved as {filename}")
+    upload_folder = os.getenv('UPLOAD_FOLDER', 'generated_docs')  # Ensure the folder path is correct
+    if not os.path.exists(upload_folder):
+        os.makedirs(upload_folder)
+    
+    file_path = os.path.join(upload_folder, filename)
+    doc.save(file_path)
+    return filename
+    # print(f"Document saved as {filename}")
 
 # Main function to get user input
-def main():
-    print("Enter the project description:")
-    project_description = input()
-    create_project_document(project_description)
 
-if __name__ == "__main__":
-    main()
+def generate_document_and_send(project_description):
+    filename = create_project_document(project_description)
+    return filename
+
+# def main():
+#     print("Enter the project description:")
+#     project_description = input()
+#     create_project_document(project_description)
+
+# if __name__ == "__main__":
+#     main()
