@@ -154,7 +154,7 @@ nav .logo::after {
 #about-us {
     padding: 50px;
     text-align: center;
-    background: url('../images/bd2.jpeg') no-repeat center center;
+    background: url('/static/images/bd2.jpeg') no-repeat center center;
     background-size: cover;
     color: white;
     margin: 20px 0;

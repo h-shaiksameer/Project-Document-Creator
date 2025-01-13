@@ -207,7 +207,7 @@ nav .logo::after {
 
 .download-section,
 .completion-message {
-    background: url('/static/images/bg-success.jpeg') no-repeat center center;
+    background: url('../images/success.jpeg') no-repeat center center;
     background-size: cover;
     padding: 40px;
     margin-top: 40px;
