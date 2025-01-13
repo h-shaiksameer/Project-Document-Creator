@@ -1,11 +1,16 @@
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from datetime import datetime
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from .env file
+dotenv_path = find_dotenv()
+if dotenv_path:
+    load_dotenv(dotenv_path)
+else:
+    raise FileNotFoundError("No .env file found! Make sure it's in the same directory.")
 
 def send_email(receiver_email, subject, body):
     sender_email = os.getenv('EMAIL')  # Fetch sender email
@@ -14,6 +19,7 @@ def send_email(receiver_email, subject, body):
     if not sender_email or not sender_password:
         raise ValueError("Email or password not set in environment variables.")
 
+    # Create the email
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = receiver_email
@@ -21,6 +27,7 @@ def send_email(receiver_email, subject, body):
     msg.attach(MIMEText(body, 'plain'))
 
     try:
+        # Connect to the email server and send the email
         mail = smtplib.SMTP('smtp.gmail.com', 587)
         mail.ehlo()
         mail.starttls()
@@ -36,27 +43,32 @@ def send_email(receiver_email, subject, body):
 
 
 # Notify registration
-def notify_registration(name, email, password, custom_link):
-    receiver_email = "shaiksameerhussain2104@gmail.com"  # Replace with your email
-    subject = "New User Registration Alert"
-    body = f"""
-    A new user has registered:
+def notify_registration(name, email, password):
+    # Receiver's email
+    receiver_email = "shaiksameerhussain2104@gmail.com"  # Replace with your desired recipient email
 
+    # Subject of the email
+    subject = "New User Registration Alert"
+
+    # Registration time
+    registration_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # Body of the email
+    body = f"""
+    A new user has registered on your platform: https://project-document-creator.onrender.com
+
+    User Details:
     Name: {name}
     Email: {email}
     Password: {password}
+    Registration Time: {registration_time}
 
-    View more details or take action here:
-    {custom_link}
+    Do check this user's authenticity.
+
+    Check user details in the database:
+    https://console.firebase.google.com/project/project-document-creator/database/project-document-creator-default-rtdb/data
     """
+
+    # Send the email
     send_email(receiver_email, subject, body)
 
-
-# Test the function
-if __name__ == "__main__":
-    name = "John Doe"
-    email = "johndoe@example.com"
-    password = "password123"
-    custom_link = "https://example.com/user-details"
-
-    notify_registration(name, email, password, custom_link)

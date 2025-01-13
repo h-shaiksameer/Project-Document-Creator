@@ -4,6 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, auth, db
 import os
 import logging
+from send_email_notification import notify_registration
 from flask import send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
@@ -134,10 +135,17 @@ def register_user():
             'name': name
         })
 
+        # Notify admin about the new registration
+        try:
+            notify_registration(name, email, password)
+        except Exception as e:
+            print(f"Error sending notification email: {e}")
+
         return render_template("register.html", message="Registration successful, please log in.")
 
     except Exception as e:
-        return render_template("register.html", error="Error occurred during registration.")
+        return render_template("register.html", error=f"Error occurred during registration: {str(e)}")
+
 
 # Serve the home page after login
 @app.route("/home")

@@ -4,6 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, auth, db
 import os
 import logging
+from send_email_notification import notify_registration
 from flask import send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
