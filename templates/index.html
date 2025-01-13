@@ -3,21 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="static\images\document.png" type="image/png">
     <link rel="icon" href="{{ url_for('static', filename='images/document.png') }}" type="image/png">
-    <title>Home</title>
+    <title>Home - Project Documentation Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
 </head>
 <body>
-    <h1>Welcome to the Project Documentation Generator</h1>
-    <p>You can generate documentation for your project based on the description provided.</p>
-    
-    <!-- Button to redirect to document page -->
-    <button id="goToDocumentPageBtn">Go to Documentation Page</button>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/document.png') }}" alt="Logo">
+            <span>Project Documentation Generator</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#contact-us">Contact</a></li>
+            <li><a href="#follow-us">Follow Us</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome to the Project Documentation Generator</h1>
+        <p>Generate documentation for your project effortlessly by providing a brief description.</p>
+        <button id="goToDocumentPageBtn">Go to Documentation Page</button>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about-us">
+        <h2>About Us</h2>
+        <p>We specialize in generating professional documentation for your projects quickly and efficiently.</p>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact-us">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, feel free to reach out to us:</p>
+        <p><strong>Email:</strong> <a href="mailto:shaiksameerhussain2104@gmail.com">Shaik Sameer Hussain</a></p>
+    </section>
+
+    <!-- Follow Us Section -->
+    <section id="follow-us">
+        <h2>Follow Us</h2>
+        <p>Connect with us on social media:</p>
+        <p>
+            <a href="https://www.facebook.com/shaiksameer.hussain.12" target="_blank">Facebook</a> | 
+            <a href="https://x.com/ShaikSa67284618" target="_blank">Twitter</a> | 
+            <a href="https://www.linkedin.com/in/shaik-sameer-123456/" target="_blank">LinkedIn</a> | 
+            <a href="https://github.com/shaiksameer" target="_blank">GitHub</a>
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Project Documentation Generator. All rights reserved.</p>
+    </footer>
 
     <script>
-        // Add event listener to the button
+        // Redirect button functionality
         document.getElementById('goToDocumentPageBtn').addEventListener('click', function() {
-            // Redirect to the /document route
             window.location.href = '/document';
         });
     </script>
