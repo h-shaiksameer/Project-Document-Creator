@@ -77,7 +77,9 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
+from dotenv import load_dotenv
 
+load_dotenv()
 # Check for environment variables directly (for Render)
 sender_email = os.getenv('EMAIL')
 sender_password = os.getenv('EMAIL_APP_PASSWORD')
