@@ -8,7 +8,7 @@ from flask import send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # Set a secret key for session management
 app.secret_key = os.urandom(24)
@@ -197,6 +197,10 @@ def logout():
 def check_if_logged_in():
     # List of routes that are publicly accessible
     public_routes = ['login_page', 'login_user_route', 'register_page', 'register_user']
+    # Allow access to static files
+    if request.endpoint and request.endpoint.startswith('static'):
+        return None  # No need to redirect for static files
+
     if not current_user.is_authenticated and request.endpoint not in public_routes:
         # Store the current URL for redirection after login
         return redirect(url_for('login_page', next=request.url))

@@ -1,6 +1,5 @@
 /* Import Google Fonts and Font Awesome */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
 
 /* Reset some default styles */
 * {
@@ -12,16 +11,20 @@
 /* Body Styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background: url('../images/bd3.jpeg') no-repeat center center fixed;
+    background: url('../images/bd4.jpeg') no-repeat center center fixed;
     background-size: cover;
     color: #333;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
-/* Navigation Bar */
+/* Navigation Bar Styling */
 nav {
-    background-color: rgba(44, 62, 80, 0.8);
-    padding: 20px;
+    background: url('../images/logo.jpeg') no-repeat center center;
+    /* Background image */
+    background-size: cover;
+    /* Ensures the image covers the entire nav area */
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,88 +33,217 @@ nav {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    /* Deeper shadow for modern look */
+    color: #ecf0f1;
+    /* Text color to contrast the background */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    /* Subtle border for separation */
+}
+
+/* Logo Section */
+nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    /* Space between logo image and text */
+    transition: transform 0.3s ease;
+    /* Animation on hover */
 }
 
 nav .logo img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+    width: 50px;
+    /* Larger logo image */
+    height: 50px;
+    border-radius: 8px;
+    /* Rounded corners for the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Image shadow for depth */
+    transition: transform 0.3s ease;
+}
+
+nav .logo img:hover {
+    transform: scale(1.1);
+    /* Subtle zoom effect */
 }
 
 nav .logo span {
-    font-size: 24px;
+    font-size: 28px;
+    /* Larger font size */
     color: #ecf0f1;
+    /* White text for contrast */
     font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    /* Subtle text shadow */
+    transition: color 0.3s ease;
 }
 
+nav .logo:hover span {
+    color: #1abc9c;
+    /* Change text color on hover */
+}
+
+/* Navigation Links */
 nav .nav-links {
     list-style: none;
     display: flex;
-}
-
-nav .nav-links li {
-    margin: 0 15px;
+    align-items: center;
+    gap: 20px;
+    /* Increased spacing for a clean layout */
 }
 
 nav .nav-links li a {
     text-decoration: none;
-    color: #ecf0f1;
-    font-size: 16px;
-    transition: color 0.3s ease;
+    color: #000000;
+    font-weight: 600;
+    font-size: 20px;
+    /* Larger font for links */
+    padding: 10px 15px;
+    /* Added padding for clickable area */
+    border-radius: 5px;
+    /* Rounded corners for hover effect */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 nav .nav-links li a:hover {
-    color: #3498db;
+    color: #ffffff;
+    /* White text on hover */
+    background-color: #3498db;
+    /* Highlighted background color */
+}
+
+/* Divider/Separator (Optional) */
+nav .logo::after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 40px;
+    background: #ffffff;
+    margin-left: 20px;
+    opacity: 0.5;
+    /* Slightly faded for subtlety */
 }
 
 /* Hero Section */
 .hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     text-align: center;
-    height: 100vh;
-    padding: 50px;
-    background: url('../images/bd4.jpeg') no-repeat center center;
-    background-size: cover;
-    color: white;
+    padding: 100px 20px 60px;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
-    animation: fadeIn 1.5s ease-out;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin: 100px auto 20px;
+    width: 80%;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    background: url('../images/bd3.jpeg') no-repeat center center;
+    background-size: cover;
 }
 
 .hero h1 {
-    font-size: 42px;
+    font-size: 36px;
     font-weight: bold;
+    color: #333;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.hero p {
-    font-size: 18px;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+.hero .tagline {
+    font-size: 24px;
+    color: #000000;
 }
 
-.hero button {
+/* Form Section */
+.form-section {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 70%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    background: url('../images/bd2.jpeg') no-repeat center center;
+    background-size: cover;
+}
+
+.form-section label {
+    display: block;
+    font-size: 24px;
+    color: #000000;
+    margin-bottom: 10px;
+}
+
+.form-section textarea {
+    width: 100%;
+    height: 120px;
+    padding: 10px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    resize: none;
+}
+
+.form-section button {
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #16a085;
-    color: white;
+    font-size: 18px;
+    background-color: #3498db;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.hero button:hover {
-    background-color: #1abc9c;
+.form-section button:hover {
+    background-color: #2980b9;
     transform: scale(1.05);
 }
 
-/* About Us Section */
+/* Message Section */
+.message {
+    text-align: center;
+    font-size: 20px;
+    color: #000000;
+    margin-top: 20px;
+}
+
+
+
+.download-section,
+.completion-message {
+    background: url('/static/images/bg-success.jpeg') no-repeat center center;
+    background-size: cover;
+    padding: 40px;
+    margin-top: 40px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    /* Dark Black */
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #16a085;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.download-btn:hover {
+    background-color: #1abc9c;
+    transform: scale(1.1);
+}
+
+
+
+.completion-message a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.completion-message a:hover {
+    text-decoration: underline;
+}
+
 #about-us {
     padding: 50px;
     text-align: center;
@@ -131,8 +263,8 @@ nav .nav-links li a:hover {
 }
 
 #about-us p {
-    font-size: 16px;
-    color: #dbe9f4;
+    font-size: 20px;
+    color: #000000;
 }
 
 /* Follow Us Section */
@@ -148,8 +280,8 @@ nav .nav-links li a:hover {
     animation: slideIn 1.5s ease-out;
 }
 
-#follow-us a {
-    color: #ecf0f1;
+#follow-us p {
+    color: #000000;
     text-decoration: none;
     margin: 0 15px;
     font-size: 24px;
@@ -201,13 +333,13 @@ nav .nav-links li a:hover {
 }
 
 #contact-us p {
-    font-size: 16px;
-    color: #dbe9f4;
+    font-size: 24px;
+    color: #000000;
 }
 
-#contact-us .email {
-    font-size: 18px;
-    color: #16a085;
+#contact-us a {
+    font-size: 22px;
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -218,7 +350,7 @@ footer {
     background-size: cover;
     color: rgb(0, 0, 0);
     text-align: center;
-    font-size: 18px;
+    font-size: 20px;
     padding: 20px;
     margin-top: 50px;
 }
@@ -229,6 +361,7 @@ footer {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -240,6 +373,7 @@ footer {
         opacity: 0;
         transform: translateX(-50px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -261,5 +395,22 @@ footer {
     #follow-us,
     #contact-us {
         padding: 30px;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav .nav-links {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero {
+        width: 90%;
+    }
+
+    .form-section,
+    .download-section {
+        width: 90%;
     }
 }
