@@ -1,12 +1,13 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, send_from_directory
 import firebase_admin
-from firebase_admin import credentials, auth, db
+from firebase_admin import credentials, auth, db, initialize_app
 import os
 import logging
 from document import generate_document_and_send
+import json
+from dotenv import load_dotenv
 
-
-
+load_dotenv()
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -17,11 +18,6 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate("firebase_admin_key.json")
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://project-document-creator-default-rtdb.firebaseio.com/'
-})
 
 # Serve the login page (HTML)
 @app.route("/")
@@ -56,7 +52,7 @@ def login_user():
                     return render_template("login.html", error="Invalid password")
         else:
             # User not found in the database
-            return render_template("login.html", error="User not found, please register.")
+            return render_template("register.html", error="User not found, please register.")
 
     except Exception as e:
         logging.error(f"Error during login: {e}")
@@ -80,7 +76,7 @@ def register_user():
 
         if user_data:
             # If email already exists, show error and redirect to login
-            return render_template("register.html", error="Email already exists. Please login.")
+            return render_template("login.html", error="Email already exists. Please login.")
 
         # Store user credentials in Firebase Realtime Database
         ref.push({

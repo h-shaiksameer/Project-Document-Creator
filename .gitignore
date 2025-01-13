@@ -5,3 +5,5 @@ __pycache__
 document
 generated_docs/*
 monitor_folder.py
+firebase_admin_key.b64
+firebase_admin_key.json

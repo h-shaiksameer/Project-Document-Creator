@@ -17,11 +17,24 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
 
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate("firebase_admin_key.json")
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://project-document-creator-default-rtdb.firebaseio.com/'
-})
+local_file_path = "firebase_admin_key.json"  # Local path for Windows
+render_file_path = "/etc/secrets/firebase_admin_key.json"  # Render secret file path
+
+# Check if running on Render
+if os.getenv("RENDER"):
+    firebase_key_path = render_file_path
+else:
+    firebase_key_path = local_file_path
+
+try:
+    # Initialize Firebase Admin SDK with the selected file path
+    cred = credentials.Certificate(firebase_key_path)
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://project-document-creator-default-rtdb.firebaseio.com/'
+    })
+    print("Firebase Admin SDK initialized successfully.")
+except Exception as e:
+    print(f"Failed to initialize Firebase Admin SDK: {e}")
 
 # Serve the login page (HTML)
 @app.route("/")
@@ -56,7 +69,7 @@ def login_user():
                     return render_template("login.html", error="Invalid password")
         else:
             # User not found in the database
-            return render_template("login.html", error="User not found, please register.")
+            return render_template("register.html", error="User not found, please register.")
 
     except Exception as e:
         logging.error(f"Error during login: {e}")
@@ -80,7 +93,7 @@ def register_user():
 
         if user_data:
             # If email already exists, show error and redirect to login
-            return render_template("register.html", error="Email already exists. Please login.")
+            return render_template("login.html", error="Email already exists. Please login.")
 
         # Store user credentials in Firebase Realtime Database
         ref.push({
