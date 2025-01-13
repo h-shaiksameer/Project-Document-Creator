@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Application</title>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <nav>
+        <a href="{{ url_for('home_page') }}">Home</a>
+        {% if current_user.is_authenticated and current_user.email == "9121sameer@gmail.com" %}
+            <!-- Admin link -->
+            <a href="{{ url_for('approve_users') }}">Approve Users</a>
+        {% endif %}
+    </nav>
+
+    <!-- Content -->
+    {% block content %}{% endblock %}
+</body>
+</html>

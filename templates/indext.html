@@ -1,3 +1,9 @@
+
+{% extends "base.html" %}
+
+{% block title %}Home - Project Documentation Generator{% endblock %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +27,7 @@
         </ul>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero">
         <h1>Welcome to the Project Documentation Generator</h1>
         <p>Generate documentation for your project effortlessly by providing a brief description.</p>
@@ -52,15 +59,25 @@
         </p>
     </section>
 
-    <footer>
-        <p>&copy; 2025 Project Documentation Generator. All rights reserved.</p>
-    </footer>
+    {% if current_user.is_authenticated and current_user.email.lower() == '9121sameer@gmail.com' %}
+        <!-- Admin-only section to approve users -->
+        <section id="admin-section">
+            <h2>Admin Section</h2>
+            <p>Click below to approve pending users.</p>
+            <a href="{{ url_for('approve_users') }}" class="btn">Approve Users</a>
+        </section>
+    {% endif %}
+{% endblock %}
 
-    <script>
-        // Redirect button functionality
-        document.getElementById('goToDocumentPageBtn').addEventListener('click', function() {
-            window.location.href = '/document';
-        });
-    </script>
+<footer>
+    <p>&copy; 2025 Project Documentation Generator. All rights reserved.</p>
+</footer>
+
+<script>
+    // Redirect button functionality
+    document.getElementById('goToDocumentPageBtn').addEventListener('click', function() {
+        window.location.href = '/document';
+    });
+</script>
 </body>
 </html>

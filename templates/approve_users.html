@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Users</title>
+</head>
+<body>
+    <h1>Approve Users</h1>
+    <p>Here you can approve users who are pending registration approval.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Approval Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if pending_users %}
+                {% for user in pending_users %}
+                    <tr>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{% if user.approved %}Approved{% else %}Pending{% endif %}</td>
+                        <td>
+                            {% if not user.approved %}
+                                <form action="{{ url_for('approve_user', user_id=user.id) }}" method="POST">
+                                    <button type="submit">Approve</button>
+                                </form>
+                            {% else %}
+                                <button disabled>Approved</button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">No users pending approval.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('home_page') }}">Back to Home</a>
+</body>
+</html>
