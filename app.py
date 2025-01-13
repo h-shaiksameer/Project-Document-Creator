@@ -8,7 +8,7 @@ from flask import send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
 # Initialize Flask app
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 # Set a secret key for session management
 app.secret_key = os.urandom(24)
