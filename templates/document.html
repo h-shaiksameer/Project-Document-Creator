@@ -10,39 +10,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/document_style.css') }}">
     <title>Generate Project Documentation</title>
-
-    <!-- Internal Styling for Loading Animation -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Basic styling for the loading spinner */
-        #loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            display: none;
-            text-align: center;
-        }
-
-        /* Styling for the spinner */
-        .spinner {
-            border: 4px solid #f3f3f3; /* Light gray */
-            border-top: 4px solid #3498db; /* Blue color */
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-        }
-
-        /* Keyframes for spinning animation */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -121,29 +88,29 @@
         <p>&copy; 2025 Project Documentation Generator. All Rights Reserved.</p>
     </footer>
 
-    <!-- Loading Spinner -->
-    <div id="loading">
-        <div class="spinner"></div>
-        <p>Loading...</p>
+    <!-- Loading Animation GIF -->
+    <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+        <img src="{{ url_for('static', filename='animations/Animation - 1736833263601.gif') }}" alt="Loading Animation">
+
     </div>
 
-    <!-- Script for Form Submission and Loading Spinner -->
+    <!-- Script for Form Submission and Loading Animation -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("docForm");
             const loadingSpinner = document.getElementById("loading");
 
-            // Show loading spinner on form submission
+            // Show loading animation on form submission
             form.addEventListener("submit", function(event) {
-                loadingSpinner.style.display = "block";  // Show the loading spinner
+                loadingSpinner.style.display = "block";  // Show the loading animation
             });
 
-            // Hide loading spinner when the document is ready for download
+            // Hide loading animation when the document is ready for download
             const downloadBtn = document.querySelector(".download-btn");
             if (downloadBtn) {
                 downloadBtn.addEventListener("click", () => {
                     alert("Thank you for using our tool! Stay tuned for exciting updates.");
-                    loadingSpinner.style.display = "none";  // Hide the spinner when the document is downloaded
+                    loadingSpinner.style.display = "none";  // Hide the loading animation when the document is downloaded
                 });
             }
         });
