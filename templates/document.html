@@ -10,6 +10,39 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/document_style.css') }}">
     <title>Generate Project Documentation</title>
+
+    <!-- Internal Styling for Loading Animation -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Basic styling for the loading spinner */
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            text-align: center;
+        }
+
+        /* Styling for the spinner */
+        .spinner {
+            border: 4px solid #f3f3f3; /* Light gray */
+            border-top: 4px solid #3498db; /* Blue color */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Keyframes for spinning animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -70,22 +103,29 @@
         <p>If you have any questions or need assistance, feel free to reach out to me:</p>
         <p><strong>Email:</strong> <a href="mailto:shaiksameerhussain2104@gmail.com">Shaik Sameer Hussain</a></p>
     </section>
+
+    <!-- Follow Us Section -->
     <section id="follow-us">
         <h2>Follow Us</h2>
         <p>Connect with us on social media:</p>
-        <div class="col-md-6 text-center text-md-end">
-            <div class="social-icons">
-                <a id="facebook-icon" href="https://www.facebook.com/shaiksameer.hussain.12" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                <a id="twitter-icon" href="https://x.com/ShaikSa67284618" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a id="instagram-icon" href="https://www.instagram.com/h_shaiksameer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a id="linkedin-icon" href="https://www.linkedin.com/in/shaik-sameer-hussain-b88323250/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/shaiksameer.hussain.12" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/ShaikSa67284618" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/h_shaiksameer" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/shaik-sameer-hussain-b88323250/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
     </section>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Project Documentation Generator. All Rights Reserved.</p>
     </footer>
+
+    <!-- Loading Spinner -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
 
     <!-- Script for Form Submission and Loading Spinner -->
     <script>
@@ -95,7 +135,7 @@
 
             // Show loading spinner on form submission
             form.addEventListener("submit", function(event) {
-                loadingSpinner.style.display = "block";
+                loadingSpinner.style.display = "block";  // Show the loading spinner
             });
 
             // Hide loading spinner when the document is ready for download
