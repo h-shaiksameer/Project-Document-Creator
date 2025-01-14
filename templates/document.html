@@ -7,78 +7,9 @@
     <meta name="keywords" content="project documentation, generator, create document, professional, tools">
     <meta name="author" content="Shaik Sameer Hussain">
     <link rel="icon" href="{{ url_for('static', filename='images/document.png') }}" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/document_style.css') }}">
     <title>Generate Project Documentation</title>
-    <style>
-        /* Loading Spinner */
-        #loading {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 16px solid #f3f3f3;
-            border-top: 16px solid #3498db;
-            border-radius: 50%;
-            width: 120px;
-            height: 120px;
-            animation: spin 2s linear infinite;
-            z-index: 1000;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Styles for the section after document is generated */
-        .download-section,
-        .completion-message {
-            background: url('../images/success.jpeg') no-repeat center center;
-            background-size: cover;
-            padding: 40px;
-            margin-top: 40px;
-            text-align: center;
-            color: rgb(0, 0, 0); /* Dark Black */
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .download-section .download-message,
-        .completion-message p {
-            font-size: 24px; /* Increased font size */
-            color: rgb(0, 0, 0); /* Dark black */
-            margin-bottom: 20px;
-        }
-
-        .download-btn {
-            padding: 15px 30px;
-            font-size: 20px;
-            background-color: #16a085;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .download-btn:hover {
-            background-color: #1abc9c;
-            transform: scale(1.1);
-        }
-
-        .completion-message a {
-            font-size: 20px;
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .completion-message a:hover {
-            text-decoration: underline;
-        }
-        .message{
-            font-size: 20px;
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -127,6 +58,7 @@
         {% endif %}
     </main>
 
+    <!-- About Us Section -->
     <section id="about-us">
         <h2>About Us</h2>
         <p>We specialize in generating professional documentation for your projects quickly and efficiently.</p>
@@ -138,30 +70,40 @@
         <p>If you have any questions or need assistance, feel free to reach out to me:</p>
         <p><strong>Email:</strong> <a href="mailto:shaiksameerhussain2104@gmail.com">Shaik Sameer Hussain</a></p>
     </section>
-
+    <section id="follow-us">
+        <h2>Follow Us</h2>
+        <p>Connect with us on social media:</p>
+        <div class="col-md-6 text-center text-md-end">
+            <div class="social-icons">
+                <a id="facebook-icon" href="https://www.facebook.com/shaiksameer.hussain.12" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a id="twitter-icon" href="https://x.com/ShaikSa67284618" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a id="instagram-icon" href="https://www.instagram.com/h_shaiksameer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a id="linkedin-icon" href="https://www.linkedin.com/in/shaik-sameer-hussain-b88323250/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </section>
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 Project Documentation Generator. All Rights Reserved.</p>
     </footer>
 
-    <!-- Loading Spinner -->
-    <div id="loading"></div>
-
-    <!-- Script for Animation and Form Submission -->
+    <!-- Script for Form Submission and Loading Spinner -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById("docForm");
             const loadingSpinner = document.getElementById("loading");
 
+            // Show loading spinner on form submission
             form.addEventListener("submit", function(event) {
-                // Show loading spinner when the form is submitted
                 loadingSpinner.style.display = "block";
             });
 
+            // Hide loading spinner when the document is ready for download
             const downloadBtn = document.querySelector(".download-btn");
             if (downloadBtn) {
                 downloadBtn.addEventListener("click", () => {
                     alert("Thank you for using our tool! Stay tuned for exciting updates.");
+                    loadingSpinner.style.display = "none";  // Hide the spinner when the document is downloaded
                 });
             }
         });

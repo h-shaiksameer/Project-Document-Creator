@@ -1,8 +1,7 @@
-/* Import Google Fonts and Font Awesome */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
 
-/* Reset some default styles */
+/* Reset Styles */
 * {
     margin: 0;
     padding: 0;
@@ -12,16 +11,15 @@
 /* Body Styling */
 body {
     font-family: 'Poppins', sans-serif;
-    background: url('../images/bd3.jpeg') no-repeat center center fixed;
-    background-size: cover;
-    color: #333;
+    background: linear-gradient(135deg, #1e3c72, #2a5298); /* Gradient background */
+    color: #ffffff;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 /* Navigation Bar */
 nav {
-    background: url('../images/logo.jpeg') no-repeat center center; /* Background image */
-    background-size: cover; /* Ensures the image covers the entire nav area */
+    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
     padding: 20px 40px;
     display: flex;
     justify-content: space-between;
@@ -31,11 +29,9 @@ nav {
     left: 0;
     width: 100%;
     z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow for modern look */
-    color: #ecf0f1; /* Text color to contrast the background */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for separation */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
-
 
 /* Logo Section */
 nav .logo {
@@ -66,43 +62,29 @@ nav .logo span {
 }
 
 nav .logo:hover span {
-    color: #1abc9c; /* Change text color on hover */
+    color: #ffcc00; /* Change text color on hover */
 }
 
-/* Navigation Links */
 nav .nav-links {
     list-style: none;
     display: flex;
-    align-items: center;
-    gap: 20px; /* Increased spacing for a clean layout */
+    gap: 20px;
 }
 
 nav .nav-links li a {
     text-decoration: none;
-    color: #000000;
+    color: #ffffff;
     font-weight: 600;
-    font-size: 20px; /* Larger font for links */
-    padding: 10px 15px; /* Added padding for clickable area */
-    border-radius: 5px; /* Rounded corners for hover effect */
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 nav .nav-links li a:hover {
-    color: #ffffff; /* White text on hover */
-    background-color: #3498db; /* Highlighted background color */
+    background-color: #ffcc00;
+    color: #333;
+    transform: scale(1.05);
 }
-
-/* Divider/Separator (Optional) */
-nav .logo::after {
-    content: "";
-    display: block;
-    width: 2px;
-    height: 40px;
-    background: #ffffff;
-    margin-left: 20px;
-    opacity: 0.5; /* Slightly faded for subtlety */
-}
-
 
 /* Hero Section */
 .hero {
@@ -113,153 +95,116 @@ nav .logo::after {
     text-align: center;
     height: 100vh;
     padding: 50px;
-    background: url('../images/bd4.jpeg') no-repeat center center;
-    background-size: cover;
-    color: white;
-    border-radius: 10px;
-    animation: fadeIn 1.5s ease-out;
+    background: linear-gradient(135deg, #2a5298, #1e3c72);
+    color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1.5s ease-out;
 }
 
 .hero h1 {
-    font-size: 42px;
+    font-size: 3rem;
     font-weight: bold;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .hero p {
-    font-size: 20px;
+    font-size: 1.5rem;
     margin-bottom: 20px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero button {
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #1679a0;
-    color: white;
+    font-size: 1rem;
+    background-color: #ffcc00;
+    color: #333;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .hero button:hover {
-    background-color: #1a7bbc;
-    transform: scale(1.05);
+    background-color: #ff7b00;
+    transform: scale(1.1);
 }
 
-/* About Us Section */
-#about-us {
+/* About, Contact, and Follow Us Sections */
+section {
     padding: 50px;
-    text-align: center;
-    background: url('/static/images/bd2.jpeg') no-repeat center center;
-    background-size: cover;
-    color: white;
-    margin: 20px 0;
+    margin: 20px auto;
+    max-width: 90%;
+    background: rgba(0, 0, 0, 0.8);
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    animation: slideIn 1.5s ease-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeInUp 1.5s ease-out;
 }
 
-#about-us h2 {
-    font-size: 28px;
-    color: #ecf0f1;
+section h2 {
+    font-size: 2rem;
+    color: #ffcc00;
     margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-#about-us p {
-    font-size: 20px;
-    color: #000000;
+section p {
+    font-size: 1.2rem;
+    color: #ffffff;
 }
 
-/* Follow Us Section */
-#follow-us {
-    padding: 50px;
+/* Footer */
+footer {
+    background: #000;
+    color: #fff;
     text-align: center;
-    background: url('../images/bd1.jpeg') no-repeat center center;
-    background-size: cover;
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    margin: 20px 0;
-    animation: slideIn 1.5s ease-out;
+    font-size: 1rem;
+    padding: 20px;
+    margin-top: 50px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.2);
 }
 
-#follow-us p {
-    color: #000000;
+footer a {
+    color: #ffcc00;
     text-decoration: none;
-    margin: 0 15px;
-    font-size: 24px;
-    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-#follow-us a:hover {
-    color: #c5e1f5;
-    transform: scale(1.2);
-}
-
-#follow-us a i {
-    margin-right: 8px;
+footer a:hover {
+    text-decoration: underline;
 }
 
 /* Social Media Icons Styling */
-.fa-facebook {
-    color: #4267B2;
+#follow-us .social-icons a {
+    font-size: 40px;  /* Increase icon size */
+    margin: 0 15px;   /* Space between icons */
+    color: #ffffff;   /* Default icon color */
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
 
-.fa-twitter {
-    color: #1DA1F2;
+/* Facebook Icon */
+#facebook-icon {
+    color: #4267B2;  /* Facebook blue */
 }
 
-.fa-linkedin {
-    color: #0077B5;
+/* Twitter Icon */
+#twitter-icon {
+    color: #1DA1F2;  /* Twitter blue */
 }
 
-.fa-github {
-    color: #333;
+/* Instagram Icon */
+#instagram-icon {
+    color: #C13584;  /* Instagram purple */
 }
 
-/* Contact Us Section */
-#contact-us {
-    padding: 50px;
-    text-align: center;
-    background: url('../images/bd3.jpeg') no-repeat center center;
-    background-size: cover;
-    color: white;
-    margin: 20px 0;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+/* LinkedIn Icon */
+#linkedin-icon {
+    color: #0077B5;  /* LinkedIn blue */
 }
 
-#contact-us h2 {
-    font-size: 28px;
-    color: #ecf0f1;
-    margin-bottom: 15px;
-}
-
-#contact-us p {
-    font-size: 20px;
-    color: #000000;
-}
-
-#contact-us .email {
-    font-size: 22px;
-    color: #16a085;
-    font-weight: bold;
-}
-
-/* Footer Styling */
-footer {
-    background-color: #ffffff;
-    background: url('../images/bd3.jpeg') no-repeat center center;
-    background-size: cover;
-    color: rgb(0, 0, 0);
-    text-align: center;
-    font-size: 20px;
-    padding: 20px;
-    margin-top: 50px;
+/* Optional: Add hover effects for icons */
+#follow-us .social-icons a:hover {
+    transform: scale(1.2);  /* Slight zoom effect */
+    transition: transform 0.3s ease;
 }
 
 /* Animations */
@@ -274,14 +219,14 @@ footer {
     }
 }
 
-@keyframes slideIn {
+@keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateX(-50px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
 
@@ -292,13 +237,14 @@ footer {
         text-align: center;
     }
 
-    .hero {
-        padding: 30px;
+    #follow-us .social-icons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
     }
 
-    #about-us,
-    #follow-us,
-    #contact-us {
-        padding: 30px;
+    #follow-us .social-icons a {
+        font-size: 35px;  /* Smaller icons on mobile */
+        margin: 0 10px;   /* Adjust margin on mobile */
     }
 }

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ url_for('static', filename='images/document.png') }}" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <title>Home - Project Documentation Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style_home.css') }}">
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <nav>
@@ -44,12 +47,14 @@
     <section id="follow-us">
         <h2>Follow Us</h2>
         <p>Connect with us on social media:</p>
-        <p>
-            <a href="https://www.facebook.com/shaiksameer.hussain.12" target="_blank">Facebook</a> | 
-            <a href="https://x.com/ShaikSa67284618" target="_blank">Twitter</a> | 
-            <a href="https://www.linkedin.com/in/shaik-sameer-123456/" target="_blank">LinkedIn</a> | 
-            <a href="https://github.com/shaiksameer" target="_blank">GitHub</a>
-        </p>
+        <div class="col-md-6 text-center text-md-end">
+            <div class="social-icons">
+                <a id="facebook-icon" href="https://www.facebook.com/shaiksameer.hussain.12" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a id="twitter-icon" href="https://x.com/ShaikSa67284618" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a id="instagram-icon" href="https://www.instagram.com/h_shaiksameer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a id="linkedin-icon" href="https://www.linkedin.com/in/shaik-sameer-hussain-b88323250/" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
     </section>
 
     <footer>
@@ -58,9 +63,10 @@
 
     <script>
         // Redirect button functionality
-        document.getElementById('goToDocumentPageBtn').addEventListener('click', function() {
+        document.getElementById('goToDocumentPageBtn').addEventListener('click', function () {
             window.location.href = '/document';
         });
     </script>
 </body>
+
 </html>
