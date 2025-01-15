@@ -13,7 +13,7 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form method="POST" action="/register">
+                <form method="POST" action="/register" id="register-form">
                     <h2>Register</h2>
 
                     {% if message %}
@@ -33,7 +33,16 @@
                         <ion-icon name="mail-outline"></ion-icon>
                         <input type="email" id="email" name="email" placeholder="Email" required>
                         <label for="email">Email</label>
+                        <button type="button" id="send-otp-btn">Send OTP</button>
+                        <span id="otp-status"></span>
                     </div>
+                    
+                    <div class="inputbox" id="otp-section">
+                        <ion-icon name="key-outline"></ion-icon>
+                        <input type="text" id="otp" name="otp" placeholder="Enter OTP">
+                        <label for="otp">OTP</label>
+                    </div>
+                    
 
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
@@ -41,10 +50,10 @@
                         <label for="password">Password</label>
                     </div>
 
-                    <button type="submit">Register</button>
+                    <button type="submit" id="register-btn">Register</button>
 
                     <div class="register">
-                        <p>Already have an account? <a href="/">Login here</a></p>
+                        <p>Already have an account? <a href="/login">Login here</a></p>
                     </div>
                 </form>
             </div>
@@ -53,6 +62,47 @@
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        const sendOtpButton = document.getElementById("send-otp-btn");
+        const otpSection = document.getElementById("otp-section");
+        const otpStatus = document.getElementById("otp-status");
+
+        sendOtpButton.addEventListener("click", function () {
+            const email = document.getElementById("email").value;
+
+            if (!email) {
+                otpStatus.textContent = "Please enter your email.";
+                otpStatus.style.color = "red";
+                return;
+            }
+
+            fetch("/send_otp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        otpSection.style.display = "block";
+                        sendOtpButton.textContent = "OTP Sent Successfully";
+                        sendOtpButton.disabled = true; // Disable button after successful OTP send
+                        sendOtpButton.style.backgroundColor = "#4CAF50"; // Change to a success color
+                        otpStatus.textContent = "";
+                    } else {
+                        otpStatus.textContent = data.message || "Failed to send OTP.";
+                        otpStatus.style.color = "red";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error sending OTP:", error);
+                    otpStatus.textContent = "An error occurred. Please try again.";
+                    otpStatus.style.color = "red";
+                });
+        });
+    </script>
 </body>
 
 </html>

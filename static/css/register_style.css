@@ -121,3 +121,86 @@ button {
     background: transparent;
     box-shadow: none;
 }
+/* Styling for the "Send OTP" button and status */
+#send-otp-btn {
+    width: 150px;
+    height: 40px;
+    border-radius: 20px;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+#send-otp-btn:hover {
+    background: #4CAF50;
+    color: #fff;
+}
+
+#send-otp-btn:disabled {
+    background: #4CAF50;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+/* Styling for the OTP status message */
+#otp-status {
+    font-size: 0.85em;
+    margin-top: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    display: block;
+}
+
+/* Ensure consistent styling for the OTP input container */
+#otp-section {
+    margin-top: 20px;
+    display: none; /* Hidden by default until OTP is sent */
+}
+
+#otp-section .inputbox {
+    margin: 20px 0;
+    width: 310px;
+    border-bottom: 2px solid #fff;
+}
+
+#otp-section .inputbox input {
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    padding: 0 35px 0 10px;
+    color: #fff;
+    box-shadow: none;
+}
+
+#otp-section .inputbox ion-icon {
+    position: absolute;
+    right: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#otp-section .inputbox label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 1em;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+#otp-section .inputbox input:focus ~ label,
+#otp-section .inputbox input:valid ~ label {
+    top: -15px;
+    font-size: 0.9em;
+}
