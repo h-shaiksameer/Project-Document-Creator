@@ -4,7 +4,7 @@ import firebase_admin
 from firebase_admin import credentials, auth, db
 import os
 import logging
-from send_email_notification import notify_registration
+from send_email_notification import notify_registration, notify_login,notify_document_generation
 from flask import send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
@@ -104,6 +104,9 @@ def login_user_route():
                     # Create user instance and log them in
                     user = User(id=key, email=email, approved=value['approved'])
                     login_user(user)
+
+                    # Notify admin about the login
+                    notify_login(email)
 
                     # Redirect to the page that the user was trying to access before being redirected to the login page
                     next_page = request.args.get('next')
@@ -212,6 +215,9 @@ def generate_document():
     try:
         # Generate the document and save it to the UPLOAD_FOLDER
         filename = generate_document_and_send(project_description)
+
+        # Notify admin about the document generation
+        notify_document_generation(email=current_user.email, project_description=project_description)
 
         # Provide success message and a download link
         message = f"Document generated successfully!"
