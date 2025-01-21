@@ -21,6 +21,32 @@ Welcome to **Project Document Creator** – a powerful platform designed to help
 
 ---
 
+## 📸 **Screenshots of the Platform**
+
+Take a look at the amazing features and user interface of **Project Document Creator**:
+
+1. **Homepage View**  
+   ![Homepage](static/images/Screenshot%202025-01-16%20231359.png)
+   
+2. **Login Page**  
+   ![Login Page](static/images/Screenshot%202025-01-16%20231708.png)
+
+3. **Registration Page**  
+   ![Registration Page](static/images/Screenshot%202025-01-16%20231302.png)
+
+4. **Dashboard After Login**  
+   ![Dashboard](static/images/Screenshot%202025-01-16%20231139.png)
+
+5. **Document Generation Page**  
+   ![Document Generation](static/images/Screenshot%202025-01-16%20231006.png)
+
+6. **OTP Verification**  
+   ![OTP Verification](static/images/Screenshot%202025-01-15%20203648.png)
+
+These screenshots give a glimpse of the sleek, user-friendly interface and the smooth experience users will enjoy on the platform. 🚀
+
+---
+
 ## 🛠 **Technologies Used**
 
 - **Frontend**: HTML, CSS, JavaScript (for dynamic interaction)
