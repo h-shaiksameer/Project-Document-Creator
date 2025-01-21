@@ -38,7 +38,7 @@ Take a look at the amazing features and user interface of **Project Document Cre
 
 4. **Dashboard After Login**  
    ![Dashboard](static/images/image.png)
-   (static/images/Screenshot%202025-01-16%20231302.png)
+   ![Dashboard](static/images/Screenshot%202025-01-16%20231302.png)
    
 
 5. **Document Generation Page**  
