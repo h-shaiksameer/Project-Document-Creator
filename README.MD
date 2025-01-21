@@ -26,7 +26,7 @@ Welcome to **Project Document Creator** – a powerful platform designed to help
 Take a look at the amazing features and user interface of **Project Document Creator**:
 
 1. **Homepage View**  
-   ![Homepage](static\images\image.png)
+   ![Homepage](static/images/image.png)
    
 2. **Login Page**  
    ![Login Page](static/images/Screenshot%202025-01-16%20231139.png)
@@ -37,7 +37,8 @@ Take a look at the amazing features and user interface of **Project Document Cre
    
 
 4. **Dashboard After Login**  
-   ![Dashboard](static/images/Screenshot%202025-01-16%20231302.png)
+   ![Dashboard](static/images/image.png)
+   (static/images/Screenshot%202025-01-16%20231302.png)
    
 
 5. **Document Generation Page**  
