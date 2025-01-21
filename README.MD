@@ -50,17 +50,6 @@ These screenshots give a glimpse of the sleek, user-friendly interface and the s
 
 ---
 
-## 🛠 **Technologies Used**
-
-- **Frontend**: HTML, CSS, JavaScript (for dynamic interaction)
-- **Backend**: Python, Flask
-- **AI**: Google Gemini Model for intelligent content generation
-- **Emailing**: SMTP, Python's smtplib for email notifications
-- **Hosting**: Render for web hosting, Jenkins for uptime monitoring
-- **Database**: Firebase for managing user data and document storage
-
----
-
 ## 💻 **How to Use**
 
 1. **Register**: Start by creating an account. Enter your details and verify your email using the OTP sent to your inbox.
