@@ -7,7 +7,7 @@ import random
 import string
 import logging
 from datetime import datetime, timedelta
-from send_email_notification import notify_registration, notify_registration_to_admin,notify_document_generation,notify_login
+from send_email_notification import notify_registration, notify_registration_to_admin,notify_document_generation,notify_login,notify_homepage_visit
 from flask import send_from_directory
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
@@ -70,6 +70,8 @@ except Exception as e:
 # Routes
 @app.route("/")
 def login_page():
+
+    notify_homepage_visit()
     return render_template("login.html")
 
 @app.route("/register_page")

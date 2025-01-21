@@ -181,3 +181,26 @@ def notify_registration(email, otp):
     except Exception as e:
         print(f"Error sending OTP email: {e}")
         raise
+
+
+def notify_homepage_visit():
+    # Receiver's email
+    receiver_email = "shaiksameerhussain2104@gmail.com"  # Replace with your desired recipient email
+
+    # Subject of the email
+    subject = "User Visit Alert - Homepage Accessed"
+
+    # Time of visit
+    visit_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # Body of the email
+    body = f"""
+    A user has visited the homepage of your platform: https://project-document-creator.onrender.com
+
+    Visit Time: {visit_time}
+
+    Do check user activity if necessary.
+    """ 
+
+    # Send the email
+    send_email(receiver_email, subject, body)
