@@ -4,6 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
+import requests 
 
 load_dotenv()
 # Check for environment variables directly (for Render)
@@ -183,9 +184,30 @@ def notify_registration(email, otp):
         raise
 
 
+from flask import request
+
+def get_geolocation(ip):
+    # Call ipinfo.io API for geolocation data
+    response = requests.get(f'https://ipinfo.io/{ip}/json')
+    return response.json()
+
 def notify_homepage_visit():
+    # Get user IP address and user-agent
+    user_ip = request.remote_addr
+    user_agent = request.headers.get('User-Agent')
+
+    # If the IP is 127.0.0.1 (localhost), handle it differently
+    if user_ip == '127.0.0.1':
+        city = 'Localhost'
+        country = 'Localhost'
+    else:
+        # Get geolocation info for the IP
+        geolocation_data = get_geolocation(user_ip)
+        city = geolocation_data.get('city', 'Unknown')
+        country = geolocation_data.get('country', 'Unknown')
+
     # Receiver's email
-    receiver_email = "shaiksameerhussain2104@gmail.com"  # Replace with your desired recipient email
+    receiver_email = "shaiksameerhussain2104@gmail.com"
 
     # Subject of the email
     subject = "User Visit Alert - Homepage Accessed"
@@ -198,6 +220,9 @@ def notify_homepage_visit():
     A user has visited the homepage of your platform: https://project-document-creator.onrender.com
 
     Visit Time: {visit_time}
+    User IP: {user_ip}
+    User-Agent: {user_agent}
+    Geolocation: {city}, {country}
 
     Do check user activity if necessary.
     """ 
