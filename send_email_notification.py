@@ -222,6 +222,8 @@ def notify_homepage_visit():
     Visit Time: {visit_time}
     User IP: {user_ip}
     User-Agent: {user_agent}
+
+    
     Geolocation: {city}, {country}
 
     Do check user activity if necessary.
