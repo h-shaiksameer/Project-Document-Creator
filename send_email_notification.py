@@ -5,6 +5,10 @@ from email.mime.text import MIMEText
 from datetime import datetime
 from dotenv import load_dotenv
 import requests 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 
 load_dotenv()
 # Check for environment variables directly (for Render)
@@ -184,27 +188,30 @@ def notify_registration(email, otp):
         raise
 
 
-from flask import request
+import requests
+from datetime import datetime
+import logging
 
 def get_geolocation(ip):
     # Call ipinfo.io API for geolocation data
     response = requests.get(f'https://ipinfo.io/{ip}/json')
     return response.json()
 
-def notify_homepage_visit():
-    # Get user IP address and user-agent
-    user_ip = request.remote_addr
-    user_agent = request.headers.get('User-Agent')
+def notify_homepage_visit(user_ip, user_agent):
+    # Log the IP and User-Agent for debugging
+    logging.info(f'User IP: {user_ip}')
+    logging.info(f'User-Agent: {user_agent}')
 
-    # If the IP is 127.0.0.1 (localhost), handle it differently
-    if user_ip == '127.0.0.1':
-        city = 'Localhost'
-        country = 'Localhost'
-    else:
-        # Get geolocation info for the IP
-        geolocation_data = get_geolocation(user_ip)
-        city = geolocation_data.get('city', 'Unknown')
-        country = geolocation_data.get('country', 'Unknown')
+    geolocation_data = get_geolocation(user_ip)
+    
+    # Log the geolocation data for debugging
+    logging.info(f'Geolocation data: {geolocation_data}')
+    
+    city = geolocation_data.get('city', 'Unknown')
+    country = geolocation_data.get('country', 'Unknown')
+
+    # Log the city and country for debugging
+    logging.info(f'City: {city}, Country: {country}')
 
     # Receiver's email
     receiver_email = "shaiksameerhussain2104@gmail.com"
@@ -215,6 +222,9 @@ def notify_homepage_visit():
     # Time of visit
     visit_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
+    # Log the visit time for debugging
+    logging.info(f'Visit time: {visit_time}')
+
     # Body of the email
     body = f"""
     A user has visited the homepage of your platform: https://project-document-creator.onrender.com
@@ -222,12 +232,12 @@ def notify_homepage_visit():
     Visit Time: {visit_time}
     User IP: {user_ip}
     User-Agent: {user_agent}
-
-    
-    Geolocation: {city}, {country}
+    City: {city}
+    Country: {country}
 
     Do check user activity if necessary.
-    """ 
+    """
 
-    # Send the email
+    # Send the email (assuming you have a function to send emails)
     send_email(receiver_email, subject, body)
+    logging.info(f'Email sent successfully to {receiver_email}!')

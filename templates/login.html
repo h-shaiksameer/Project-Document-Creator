@@ -3,7 +3,6 @@
 
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login_style.css') }}">
-    <link rel="icon" href="static\images\document.png" type="image/png">
     <link rel="icon" href="{{ url_for('static', filename='images/document.png') }}" type="image/png">
     <title>Login</title>
 </head>
@@ -12,7 +11,7 @@
     <section>
         <div class="form-box">
             <div class="form-value">
-                <form method="POST" action="/login">
+                <form method="POST" action="/login" id="login-form">
                     <h2>Login</h2>
                     {% if message %}
                     <p style="color: green; font-weight: bold;">{{ message }}</p>
@@ -32,11 +31,10 @@
                     </div>
                     <div class="forget">
                         <label for=""><input type="checkbox">Remember Me <a href="#">Forget Password</a></label>
-
                     </div>
                     <button type="submit">Login</button>
                     <div class="register">
-                        <p>Don't have a account <a href="/register_page">Register</a></p>
+                        <p>Don't have an account <a href="/register_page">Register</a></p>
                     </div>
                 </form>
             </div>
@@ -44,6 +42,17 @@
     </section>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script>
+        window.onload = function() {
+            fetch('/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ ip: 'auto' }) // 'auto' indicates to use the server's method to get the IP
+            });
+        };
+    </script>
 </body>
 
 </html>

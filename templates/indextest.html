@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate professional project documentation for your project with ease.">
+    <meta name="keywords" content="project documentation, generator, create document, professional, tools">
+    <meta name="author" content="Shaik Sameer Hussain">
+    <link rel="icon" href="{{ url_for('static', filename='images/document.png') }}" type="image/png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/document_style.css') }}">
+    <title>Generate Project Documentation</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/document.png') }}" alt="Project Documentation Generator Logo">
+            <span>Project Documentation Generator</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="#about-us">About Us</a></li>
+            <li><a href="#contact-us">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Section -->
+    <main>
+        <div class="hero">
+            <h1>Generate Your Project Documentation</h1>
+            <p class="tagline">Effortlessly create professional project documentation tailored to your needs!</p>
+        </div>
+
+        <div class="form-section">
+            <form id="docForm" method="POST" action="/generate_document" enctype="multipart/form-data" aria-labelledby="project-description-form">
+                <label for="project_description">Enter Project Description:</label><br>
+                <textarea id="project_description" name="project_description" rows="6" placeholder="Describe your project..." aria-required="true"></textarea><br>
+
+                <label for="image">Upload an Image (Optional):</label><br>
+                <input type="file" id="image" name="image" accept="image/*"><br>
+
+                <button type="submit">Generate Document</button>
+            </form>
+        </div>
+
+        {% if message %}
+        <div class="message">
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+
+        {% if download_url %}
+        <div class="download-section">
+            <p class="download-message">Your document is ready! You can download it from the link below:</p>
+            <a class="download-btn" href="{{ download_url }}" download>Download Project Documentation</a>
+        </div>
+        <div class="completion-message">
+            <p>Feel free to edit and enhance the document. We're constantly working on upgrades to improve accuracy and quality!</p>
+            <p>Have any questions or feedback? <a href="mailto:your_email@example.com">Contact the Creator</a>.</p>
+        </div>
+        {% endif %}
+    </main>
+
+    <!-- About Us Section -->
+    <section id="about-us">
+        <h2>About Us</h2>
+        <p>We specialize in generating professional documentation for your projects quickly and efficiently.</p>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact-us">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or need assistance, feel free to reach out to me:</p>
+        <p><strong>Email:</strong> <a href="mailto:shaiksameerhussain2104@gmail.com">Shaik Sameer Hussain</a></p>
+    </section>
+
+    <!-- Follow Us Section -->
+    <section id="follow-us">
+        <h2>Follow Us</h2>
+        <p>Connect with us on social media:</p>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/shaiksameer.hussain.12" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://x.com/ShaikSa67284618" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/h_shaiksameer" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/shaik-sameer-hussain-b88323250/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Project Documentation Generator. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Loading Animation GIF -->
+    <div id="loading" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+        <img src="{{ url_for('static', filename='animations/Animation - 1736833263601.gif') }}" alt="Loading Animation">
+    </div>
+
+    <!-- Script for Form Submission and Loading Animation -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("docForm");
+            const loadingSpinner = document.getElementById("loading");
+
+            // Show loading animation on form submission
+            form.addEventListener("submit", function(event) {
+                loadingSpinner.style.display = "block";  // Show the loading animation
+            });
+
+            // Hide loading animation when the document is ready for download
+            const downloadBtn = document.querySelector(".download-btn");
+            if (downloadBtn) {
+                downloadBtn.addEventListener("click", () => {
+                    alert("Thank you for using our tool! Stay tuned for exciting updates.");
+                    loadingSpinner.style.display = "none";  // Hide the loading animation when the document is downloaded
+                });
+            }
+        });
+    </script>
+</body>
+</html>

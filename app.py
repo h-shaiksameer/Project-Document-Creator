@@ -71,8 +71,18 @@ except Exception as e:
 @app.route("/")
 def login_page():
 
-    notify_homepage_visit()
+    user_ip = request.remote_addr
+    user_agent = request.headers.get('User-Agent')
+    notify_homepage_visit(user_ip, user_agent)
     return render_template("login.html")
+
+@app.route('/location', methods=['POST'])
+def location():
+    data = request.get_json()
+    user_ip = request.remote_addr if data.get('ip') == 'auto' else data.get('ip')
+    user_agent = request.headers.get('User-Agent')
+    notify_homepage_visit(user_ip, user_agent)
+    return jsonify({'status': 'success'})
 
 @app.route("/register_page")
 def register_page():
@@ -266,4 +276,4 @@ def check_if_logged_in():
         return redirect(url_for('login_page', error="Your account is pending approval."))
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=4000)

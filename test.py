@@ -5,6 +5,8 @@ from firebase_admin import credentials, auth, db
 import os
 import random
 import string
+import uuid
+from werkzeug.utils import secure_filename
 import logging
 from datetime import datetime, timedelta
 from send_email_notification import notify_registration, notify_registration_to_admin,notify_document_generation,notify_login
@@ -16,6 +18,59 @@ app = Flask(__name__, static_folder='static')
 
 # Set a secret key for session management
 app.secret_key = os.urandom(24)
+
+# Directory for storing uploaded images
+IMAGE_UPLOAD_FOLDER = "uploaded_images"
+app.config['IMAGE_UPLOAD_FOLDER'] = IMAGE_UPLOAD_FOLDER
+
+if not os.path.exists(app.config['IMAGE_UPLOAD_FOLDER']):
+    os.makedirs(app.config['IMAGE_UPLOAD_FOLDER'])
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# Route for handling image upload
+@app.route("/upload_image", methods=["POST"])
+@login_required
+def upload_image():
+    if 'image' not in request.files:
+        logging.error("No file part in the request.")
+        return jsonify({"success": False, "message": "No file part"}), 400
+
+    file = request.files['image']
+    
+    if file.filename == '':
+        logging.error("No selected file.")
+        return jsonify({"success": False, "message": "No selected file"}), 400
+
+    if file and allowed_file(file.filename):
+        # Secure and unique filename
+        filename = secure_filename(file.filename)
+        unique_filename = f"{uuid.uuid4().hex}_{filename}"
+
+        # Construct the full path where the image will be saved
+        file_path = os.path.join(app.config['IMAGE_UPLOAD_FOLDER'], unique_filename)
+
+        try:
+            # Save the image
+            file.save(file_path)
+
+            # Log successful image save
+            logging.info(f"Image saved successfully at: {file_path}")
+
+            # Store the uploaded image path in the session for later use in document generation
+            session['uploaded_image_path'] = file_path
+
+            return jsonify({"success": True, "message": "Image uploaded successfully.", "filename": unique_filename}), 200
+        except Exception as e:
+            logging.error(f"Error saving image: {e}")
+            return jsonify({"success": False, "message": "Error saving the image. Please try again."}), 500
+    else:
+        logging.error(f"Invalid file format: {file.filename}. Allowed: png, jpg, jpeg, gif.")
+        return jsonify({"success": False, "message": "Invalid file format. Allowed: png, jpg, jpeg, gif."}), 400
+
 
 UPLOAD_FOLDER = "generated_docs"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -199,18 +254,27 @@ def verify_otp(email, otp):
 @login_required
 def generate_document():
     project_description = request.form.get("project_description")
+    # Retrieve the image path from the session or use the default image path
+    image_path = session.get('uploaded_image_path', 'static/images/document.png')
 
     if not project_description:
         return render_template("document.html", message="Project description is required.")
-
+    
     try:
-        filename = generate_document_and_send(project_description)
+        # Pass both project_description and image_path to the generate_document_and_send function
+        filename = generate_document_and_send(project_description, image_path=image_path)
+
+        # Clear the uploaded image path from session after use
+        session.pop('uploaded_image_path', None)
+
         notify_document_generation(email=current_user.email, project_description=project_description)
         download_url = url_for('download_document', filename=filename)
         return render_template("document.html", message="Document generated!", download_url=download_url)
     except Exception as e:
         logging.error(f"Document generation error: {e}")
         return render_template("document.html", message="Failed to generate document.")
+
+
 
 @app.route('/download/<filename>')
 def download_document(filename):
