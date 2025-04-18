@@ -191,53 +191,75 @@ def notify_registration(email, otp):
 import requests
 from datetime import datetime
 import logging
+import os
 
 def get_geolocation(ip):
-    # Call ipinfo.io API for geolocation data
-    response = requests.get(f'https://ipinfo.io/{ip}/json')
-    return response.json()
+    try:
+        token = os.getenv("IPINFO_TOKEN")
+        if not token:
+            raise Exception("IPINFO_TOKEN not set")
 
-def notify_homepage_visit(user_ip, user_agent):
-    # Log the IP and User-Agent for debugging
-    logging.info(f'User IP: {user_ip}')
-    logging.info(f'User-Agent: {user_agent}')
+        res = requests.get(f'https://ipinfo.io/{ip}?token={token}')
+        if res.status_code == 200:
+            data = res.json()
+            if data.get("city") and data.get("region") and data.get("country"):
+                return {
+                    'ip': data.get("ip", "Unknown"),
+                    'city': data.get("city", "Unknown"),
+                    'region': data.get("region", "Unknown"),
+                    'country': data.get("country", "Unknown"),
+                    'isp': data.get("org", "Unknown")
+                }
+        return get_fallback_geolocation(ip)
+    except:
+        return get_fallback_geolocation(ip)
 
-    geolocation_data = get_geolocation(user_ip)
-    
-    # Log the geolocation data for debugging
-    logging.info(f'Geolocation data: {geolocation_data}')
-    
-    city = geolocation_data.get('city', 'Unknown')
-    country = geolocation_data.get('country', 'Unknown')
+def get_fallback_geolocation(ip):
+    try:
+        res = requests.get(f'http://ip-api.com/json/{ip}')
+        if res.status_code == 200:
+            data = res.json()
+            return {
+                'ip': data.get("query", "Unknown"),
+                'city': data.get("city", "Unknown"),
+                'region': data.get("regionName", "Unknown"),
+                'country': data.get("country", "Unknown"),
+                'isp': data.get("isp", "Unknown")
+            }
+    except:
+        pass
+    return {
+        'ip': "Unknown",
+        'city': "Unknown",
+        'region': "Unknown",
+        'country': "Unknown",
+        'isp': "Unknown"
+    }
 
-    # Log the city and country for debugging
-    logging.info(f'City: {city}, Country: {country}')
+def notify_homepage_visit(request):
+    forwarded_for = request.headers.get("X-Forwarded-For", "").split(",")[0]
+    user_ip = forwarded_for or request.remote_addr or "Unknown"
+    user_agent = request.headers.get("User-Agent", "Unknown")
 
-    # Receiver's email
-    receiver_email = "shaiksameerhussain2104@gmail.com"
+    if user_ip in ["127.0.0.1", "::1"] or user_ip.startswith(("10.", "192.168.")):
+        logging.warning("Skipping internal IP")
+        return
 
-    # Subject of the email
-    subject = "User Visit Alert - Homepage Accessed"
+    location = get_geolocation(user_ip)
 
-    # Time of visit
     visit_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-    # Log the visit time for debugging
-    logging.info(f'Visit time: {visit_time}')
-
-    # Body of the email
+    receiver_email = "shaiksameerhussain2104@gmail.com"
+    subject = "User Visit Alert - Homepage Accessed"
     body = f"""
-    A user has visited the homepage of your platform: https://project-document-creator.onrender.com
+    A user visited your site: https://project-document-creator.onrender.com
 
-    Visit Time: {visit_time}
-    User IP: {user_ip}
+    Time: {visit_time}
+    IP: {location['ip']}
     User-Agent: {user_agent}
-    City: {city}
-    Country: {country}
-
-    Do check user activity if necessary.
+    City: {location['city']}
+    Region: {location['region']}
+    Country: {location['country']}
+    ISP: {location['isp']}
     """
 
-    # Send the email (assuming you have a function to send emails)
     send_email(receiver_email, subject, body)
-    logging.info(f'Email sent successfully to {receiver_email}!')
