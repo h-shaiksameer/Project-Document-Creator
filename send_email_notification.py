@@ -192,6 +192,8 @@ import requests
 from datetime import datetime
 import logging
 import os
+from flask import request
+from flask import has_request_context
 
 def get_geolocation(ip):
     try:
@@ -236,7 +238,11 @@ def get_fallback_geolocation(ip):
         'isp': "Unknown"
     }
 
-def notify_homepage_visit(request):
+def notify_homepage_visit():
+    if not has_request_context():
+        logging.warning("No request context available")
+        return
+
     forwarded_for = request.headers.get("X-Forwarded-For", "").split(",")[0]
     user_ip = forwarded_for or request.remote_addr or "Unknown"
     user_agent = request.headers.get("User-Agent", "Unknown")
@@ -246,8 +252,8 @@ def notify_homepage_visit(request):
         return
 
     location = get_geolocation(user_ip)
-
     visit_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
     receiver_email = "shaiksameerhussain2104@gmail.com"
     subject = "User Visit Alert - Homepage Accessed"
     body = f"""

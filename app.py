@@ -73,7 +73,7 @@ def login_page():
 
     user_ip = request.remote_addr
     user_agent = request.headers.get('User-Agent')
-    notify_homepage_visit(user_ip, user_agent)
+    notify_homepage_visit()
     return render_template("login.html")
 
 @app.route('/location', methods=['POST'])
@@ -81,7 +81,7 @@ def location():
     data = request.get_json()
     user_ip = request.remote_addr if data.get('ip') == 'auto' else data.get('ip')
     user_agent = request.headers.get('User-Agent')
-    notify_homepage_visit(user_ip, user_agent)
+    notify_homepage_visit()
     return jsonify({'status': 'success'})
 
 @app.route("/register_page")
